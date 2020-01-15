@@ -2,6 +2,7 @@
 
 PROJECT_NAME=coolcpp
 PROJECT_ROOT=~/tmp/cpp_project
+CMAKE_SOURCE_DIR='${CMAKE_SOURCE_DIR}'
 
 INIT_GIT_REPO=false
 
@@ -41,9 +42,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # set include directories
-include_directories("${PROJECT_ROOT}/bin/include"
-  "${PROJECT_ROOT}/lib/include"
-  "${PROJECT_ROOT}/test/include"
+include_directories(
+  "${CMAKE_SOURCE_DIR}/bin/include"
+  "${CMAKE_SOURCE_DIR}/lib/include"
+  "${CMAKE_SOURCE_DIR}/test/include"
 )
 
 # include the sub-projects in bin, lib and test
@@ -71,7 +73,7 @@ function generateSubLevelCMakeLists {
   local filename=${PROJECT_ROOT}/${subdir}/CMakeLists.txt
   /bin/cat << EOF >${filename}
 # CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
-add_executable(${PROJECT_NAME}${subdir} ${PROJECT_ROOT}/${subdir}/source/main.cpp)
+add_executable(${PROJECT_NAME}${subdir} ${CMAKE_SOURCE_DIR}/${subdir}/source/main.cpp)
 
 EOF
 } # function generateSubLevelCMakeLists
