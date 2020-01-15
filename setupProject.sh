@@ -46,15 +46,16 @@ include_directories("${PROJECT_ROOT}/bin/include"
   "${PROJECT_ROOT}/test/include"
 )
 
-add_subdirectory(${PROJECT_ROOT}/bin)
-add_subdirectory(${PROJECT_ROOT}/lib)
-add_subdirectory(${PROJECT_ROOT}/test)
+# include the sub-projects in bin, lib and test
+add_subdirectory(bin)
+add_subdirectory(lib)
+add_subdirectory(test)
 
 # add the executable
-add_executable(${PROJECT_NAME} ${PROJECT_ROOT}/bin/source/main.cpp)
+# add_executable(${PROJECT_NAME} ${PROJECT_ROOT}/bin/source/main.cpp)
 
 # add test executable
-add_executable(${PROJECT_NAME}Test ${PROJECT_ROOT}/test/source/main.cpp)
+# add_executable(${PROJECT_NAME}Test ${PROJECT_ROOT}/test/source/main.cpp)
 
 enable_testing()
 add_test(NAME ${PROJECT_NAME}Test COMMAND MyExample)
@@ -65,10 +66,12 @@ EOF
 } # function generateTopLevelCMakeLists
 
 function generateSubLevelCMakeLists {
+  # TODO: different version for lib
   local subdir=${1}
   local filename=${PROJECT_ROOT}/${subdir}/CMakeLists.txt
   /bin/cat << EOF >${filename}
 # CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
+add_executable(${PROJECT_NAME}${subdir} ${PROJECT_ROOT}/${subdir}/source/main.cpp)
 
 EOF
 } # function generateSubLevelCMakeLists
@@ -95,6 +98,9 @@ echo "# Project ${PROJECT_NAME}" > ${PROJECT_ROOT}/README.md
 
 /bin/cp -pvf templates/main.cpp.template ${PROJECT_ROOT}/test/source/main.cpp
 /bin/cp -pvf templates/main.h.template ${PROJECT_ROOT}/test/include/main.h
+
+/bin/cp -pvf templates/main.cpp.template ${PROJECT_ROOT}/lib/source/main.cpp
+/bin/cp -pvf templates/main.h.template ${PROJECT_ROOT}/lib/include/main.h
 
 if [ "${INIT_GIT_REPO}" == "true" ] ; then
   echo "intializing Git repository in directory  ${PROJECT_ROOT} ..."
