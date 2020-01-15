@@ -4,7 +4,7 @@ PROJECT_NAME=coolcpp
 PROJECT_ROOT=~/tmp/cpp_project
 CMAKE_SOURCE_DIR='${CMAKE_SOURCE_DIR}'
 
-INIT_GIT_REPO=false
+INIT_GIT_REPO=true
 
 DEBUG=true
 
@@ -71,11 +71,21 @@ function generateSubLevelCMakeLists {
   # TODO: different version for lib
   local subdir=${1}
   local filename=${PROJECT_ROOT}/${subdir}/CMakeLists.txt
-  /bin/cat << EOF >${filename}
+  if [ "${subdir}" == "lib" ] ; then
+    /bin/cat << EOF >${filename}
+# CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
+
+# create a library called ${PROJECT_NAME}${subdir}
+add_library( ${PROJECT_NAME}${subdir} ${CMAKE_SOURCE_DIR}/${subdir}/source/main.cpp)
+
+EOF
+  else
+    /bin/cat << EOF >${filename}
 # CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
 add_executable(${PROJECT_NAME}${subdir} ${CMAKE_SOURCE_DIR}/${subdir}/source/main.cpp)
 
 EOF
+  fi
 } # function generateSubLevelCMakeLists
 
 
