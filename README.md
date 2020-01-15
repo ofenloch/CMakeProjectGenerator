@@ -16,7 +16,9 @@ This script and the associated templates create a basic CMake project. The direc
     ├── lib
     │   ├── CMakeLists.txt
     │   ├── include
+    │   │   └── main.h
     │   └── source
+    │       └── main.cpp
     ├── README.md
     └── test
         ├── CMakeLists.txt
@@ -24,4 +26,19 @@ This script and the associated templates create a basic CMake project. The direc
         │   └── main.h
         └── source
             └── main.cpp
+
+* Directory **lib/** contains a CMakeLists.txt and all sources and headers needed to build the library libhello.a.
+
+* Directory **bin/** contains CMakeLists.txt and all sources and headers needed to build the executable main-hello which uses libhello.a.
+
+* Directory **test/** contains CMakeLists.txt and all sources and headers to build the tes program.
+
+* Directory **doc/** contains stuff needed to build the documentation (by Doxygen).
+
+* Directory **data/** contains all kind of data (e.g. logger config, translations, etc.) needed for various parts of out our project
+
+
+
+
+The top level CMakeLists.txt sets up th global configuaraion and loads the sub-projects in directories bin/, lib/, and test/.
 
