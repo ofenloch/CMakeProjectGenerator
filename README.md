@@ -1,30 +1,36 @@
 # Shell Script Setting Up a new C++ Project with CMake
 
-This script and the associated templates create a basic CMake project. The directory layout looks like this:
+This script and the associated templates create a basic CMake project. 
+
+On my kubuntu 19.04 machine the project acutally builds and the program runs.
+
+The directory layout looks like this (`tree -F projectname`):
 
 
     projectname/
-    ├── bin
+    ├── .git/
+    ├── .vscode/
+    ├── bin/
     │   ├── CMakeLists.txt
-    │   ├── include
+    │   ├── include/
     │   │   └── main.h
-    │   └── source
+    │   └── source/
     │       └── main.cpp
     ├── CMakeLists.txt
-    ├── data
-    ├── doc
-    ├── lib
+    ├── data/
+    ├── doc/
+    ├── lib/
     │   ├── CMakeLists.txt
-    │   ├── include
-    │   │   └── main.h
-    │   └── source
-    │       └── main.cpp
+    │   ├── include/
+    │   │   └── mainlib.h
+    │   └── source/
+    │       └── mainlib.cpp
     ├── README.md
-    └── test
+    └── test/
         ├── CMakeLists.txt
-        ├── include
+        ├── include/
         │   └── main.h
-        └── source
+        └── source/
             └── main.cpp
 
 * Directory **lib/** contains a CMakeLists.txt and all sources and headers needed to build the library libhello.a.
