@@ -18,6 +18,7 @@ function createDirectoryStructure {
   /bin/mkdir -p ${PROJECT_ROOT}/test/include
   /bin/mkdir -p ${PROJECT_ROOT}/doc
   /bin/mkdir -p ${PROJECT_ROOT}/data
+  /bin/mkdir -p ${PROJECT_ROOT}/.vscode
 }
 
 function generateTopLevelCMakeLists {
@@ -49,11 +50,12 @@ include_directories(
 )
 
 # include the sub-projects in bin, lib and test
-add_subdirectory(bin)
 add_subdirectory(lib)
+add_subdirectory(bin)
 add_subdirectory(test)
 
 # add the executable
+
 # add_executable(${PROJECT_NAME} ${PROJECT_ROOT}/bin/source/main.cpp)
 
 # add test executable
@@ -76,13 +78,16 @@ function generateSubLevelCMakeLists {
 # CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
 
 # create a library called ${PROJECT_NAME}${subdir}
-add_library( ${PROJECT_NAME}${subdir} ${CMAKE_SOURCE_DIR}/${subdir}/source/main.cpp)
+add_library( ${PROJECT_NAME}lib STATIC ${CMAKE_SOURCE_DIR}/${subdir}/source/mainlib.cpp)
 
 EOF
   else
     /bin/cat << EOF >${filename}
 # CMakeLists.txt: CMakeLists.txt for ${subdir} of project ${PROJECT_NAME}
+
 add_executable(${PROJECT_NAME}${subdir} ${CMAKE_SOURCE_DIR}/${subdir}/source/main.cpp)
+
+target_link_libraries(${PROJECT_NAME}${subdir} ${PROJECT_NAME}lib)
 
 EOF
   fi
@@ -111,8 +116,10 @@ echo "# Project ${PROJECT_NAME}" > ${PROJECT_ROOT}/README.md
 /bin/cp -pvf templates/main.cpp.template ${PROJECT_ROOT}/test/source/main.cpp
 /bin/cp -pvf templates/main.h.template ${PROJECT_ROOT}/test/include/main.h
 
-/bin/cp -pvf templates/main.cpp.template ${PROJECT_ROOT}/lib/source/main.cpp
-/bin/cp -pvf templates/main.h.template ${PROJECT_ROOT}/lib/include/main.h
+/bin/cp -pvf templates/main.lib.cpp.template ${PROJECT_ROOT}/lib/source/mainlib.cpp
+/bin/cp -pvf templates/main.lib.h.template ${PROJECT_ROOT}/lib/include/mainlib.h
+
+/bin/cp -pvf templates/launch.json.template ${PROJECT_ROOT}/.vscode/launch.json
 
 if [ "${INIT_GIT_REPO}" == "true" ] ; then
   echo "intializing Git repository in directory  ${PROJECT_ROOT} ..."
