@@ -1,7 +1,7 @@
  #!/bin/bash
 
 PROJECT_NAME=coolcpp
-PROJECT_ROOT=~/tmp/cpp_project
+PROJECT_ROOT=~/workspaces/cpp/coolcpp
 CMAKE_SOURCE_DIR='${CMAKE_SOURCE_DIR}'
 
 INIT_GIT_REPO=true
@@ -120,6 +120,8 @@ echo "# Project ${PROJECT_NAME}" > ${PROJECT_ROOT}/README.md
 /bin/cp -pvf templates/main.lib.h.template ${PROJECT_ROOT}/lib/include/mainlib.h
 
 /bin/cp -pvf templates/launch.json.template ${PROJECT_ROOT}/.vscode/launch.json
+
+/bin/cp -pvf templates/gitignore.template ${PROJECT_ROOT}/.gitignore
 
 if [ "${INIT_GIT_REPO}" == "true" ] ; then
   echo "intializing Git repository in directory  ${PROJECT_ROOT} ..."
