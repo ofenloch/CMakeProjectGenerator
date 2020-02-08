@@ -1,8 +1,22 @@
  #!/bin/bash
 
-PROJECT_NAME=coolcpp
-PROJECT_ROOT=~/workspaces/cpp/coolcpp
+if [ -n "${1}" ] ; then
+    # there's an argument (the string's length is greater than zero)
+    PROJECT_NAME=${1}
+else
+    # there was no argument given
+    PROJECT_NAME=coolcpp
+fi
+
+echo "Setting up project ${PROJECT_NAME} ..."
+
+PROJECT_ROOT=~/workspaces/cpp/${PROJECT_NAME}
+
+echo "Project root is ${PROJECT_ROOT}"
+
+
 CMAKE_SOURCE_DIR='${CMAKE_SOURCE_DIR}'
+
 
 INIT_GIT_REPO=true
 
