@@ -36,5 +36,20 @@ add_subdirectory(bin)
 add_subdirectory(test)
 
 
+#
+# Testing
+#
 enable_testing()
-add_test(NAME ${PROJECT_NAME}Test COMMAND MyExample)
+
+# define a function to simplify adding tests (using PASS_REGULAR_EXPRESSION to check the program's output)
+function(do_test target arg result)
+  add_test(NAME Comp${arg} COMMAND ${target} ${arg})
+  set_tests_properties(Comp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result}
+)
+endfunction(do_test)
+
+# minimal test: does it run?
+add_test(NAME Runs COMMAND ${PROJECT_NAME})
+
+
