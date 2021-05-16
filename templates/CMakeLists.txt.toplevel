@@ -50,6 +50,6 @@ function(do_test target arg result)
 endfunction(do_test)
 
 # minimal test: does it run?
-add_test(NAME Runs COMMAND ${PROJECT_NAME})
+add_test(NAME Runs COMMAND ${PROJECT_NAME}bin)
 
 
