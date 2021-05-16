@@ -62,51 +62,9 @@ function createNewClass() {
 
 
 function generateTopLevelCMakeLists {
-  # create the files first lines here to get the variables right
-  /bin/cat <<EOF >${PROJECT_ROOT}/CMakeLists.txt
-# CMakeLists.txt: top level CMakeLists.txt for project ${PROJECT_NAME}
-
-# set minimum CMake version
-cmake_minimum_required(VERSION 3.13)
-
-# This is your project statement. You should always list languages;
-# Listing the version is nice here since it sets lots of useful variables
-project(${PROJECT_NAME} VERSION 0.1 LANGUAGES CXX)
-
-# set the project's root folder
-set(PROJECT_ROOT ${PROJECT_ROOT})
-set(PROJECT_NAME ${PROJECT_NAME})
-
-# set C++ standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-# set include directories
-include_directories(
-  "${CMAKE_SOURCE_DIR}/bin/include"
-  "${CMAKE_SOURCE_DIR}/lib/include"
-  "${CMAKE_SOURCE_DIR}/test/include"
-)
-
-# include the sub-projects in bin, lib and test
-add_subdirectory(lib)
-add_subdirectory(bin)
-add_subdirectory(test)
-
-# add the executable
-
-# add_executable(${PROJECT_NAME} ${PROJECT_ROOT}/bin/source/main.cpp)
-
-# add test executable
-# add_executable(${PROJECT_NAME}Test ${PROJECT_ROOT}/test/source/main.cpp)
-
-enable_testing()
-add_test(NAME ${PROJECT_NAME}Test COMMAND MyExample)
-
-EOF
-  # now cat the template into the file
-  /bin/cat ./templates/TopLevelCMakeLists.template >> ${PROJECT_ROOT}/CMakeLists.txt
+  echo "s|\${PROJECT_NAME}|${PROJECT_NAME}|g" > ./toplevelCMakeLists.sed
+  echo "s|\${PROJECT_ROOT}|${PROJECT_ROOT}|g" >> ./toplevelCMakeLists.sed
+  /usr/bin/sed -f ./toplevelCMakeLists.sed ./templates/CMakeLists.txt.toplevel > ${PROJECT_ROOT}/CMakeLists.txt
 } # function generateTopLevelCMakeLists
 
 function generateSubLevelCMakeLists {
