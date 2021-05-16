@@ -1,4 +1,0 @@
-
-# add your own stuff here
-message("The project's name is ${PROJECT_NAME}")
-message("The project's folder is ${PROJECT_ROOT}")
