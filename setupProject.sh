@@ -142,5 +142,5 @@ if [ "${INIT_GIT_REPO}" == "true" ] ; then
   cd ${PROJECT_ROOT}
   git init
   git add .
-  git commit -a -m "inital check in of project '${PROJECT_NAME}'"
+  git commit -a -m "inital commit of project '${PROJECT_NAME}'"
 fi
