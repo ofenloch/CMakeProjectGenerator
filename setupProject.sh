@@ -107,7 +107,7 @@ generateSubLevelCMakeLists lib
 generateSubLevelCMakeLists test
 
 # createNewClass className classFileBaseName classIncludeGuard classSubDirectory
-createNewClass CAbstractBaseHello abstract_base_hello _ABSTRACT_BASE_HELLO_H_ greeter 
+createNewClass CAbstractBaseHello abstract_base_hello _ABSTRACT_BASE_HELLO_H_ lib 
 
 echo "# Project ${PROJECT_NAME}" > ${PROJECT_ROOT}/README.md
 echo "Project ${PROJECT_NAME} was automatigically created by ${0} at $(date "+%Y-%m-%d--%H-%M-%S")" > ${PROJECT_ROOT}/README.md
@@ -121,7 +121,10 @@ echo "Project ${PROJECT_NAME} was automatigically created by ${0} at $(date "+%Y
 /bin/cp -pvf templates/main.lib.cpp.template ${PROJECT_ROOT}/lib/source/mainlib.cpp
 /bin/cp -pvf templates/main.lib.h.template ${PROJECT_ROOT}/lib/include/mainlib.h
 
-/bin/cp -pvf templates/launch.json.template ${PROJECT_ROOT}/.vscode/launch.json
+#/bin/cp -pvf templates/launch.json.template ${PROJECT_ROOT}/.vscode/launch.json
+# replace "coolcpp" by ${PROJECT_NAME}
+/usr/bin/echo "s/coolcpp/${PROJECT_NAME}/g" > launch.sed
+/usr/bin/sed -f launch.sed templates/launch.json.template > ${PROJECT_ROOT}/.vscode/launch.json
 
 /bin/cp -pvf templates/gitignore.template ${PROJECT_ROOT}/.gitignore
 
